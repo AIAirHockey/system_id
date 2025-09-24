@@ -1,5 +1,5 @@
 ----- INSTRUCTIONS ---------
-Run table on paths you would like to tune to. Save the experimental data in a csv with the format
+Run table on paths you would like to tune to. Save the experimental data for each path in a csv with the format
 
 x,y,dt,Left_PWM,Right_PWM
 
