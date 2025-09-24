@@ -16,7 +16,7 @@ J_theta = x(3)/ 1000 / 100^2;
 B_X_coeff = x(4);
 B_Y_coeff = x(5);
 
-Jm = 3.5^2/4.*[J_X+J_Y J_X-J_Y; J_X-J_Y J_X+J_Y] + J_theta*eye(2);
+Jm = 3.5^2/4.*[J_X+J_Y J_Y-J_X; J_Y-J_X J_X+J_Y] + J_theta*eye(2);
 J_inv = inv(Jm);
 
 B_X = B_X_coeff *noLoadCurrent * Km / noLoadSpeed_rad; % Nms
@@ -43,7 +43,7 @@ Kff{1,2} = Kff{1,2};
 Kff{2,1} = Kff{2,1};
 Kff{2,2} = Kff{2,2};
 
-theta_rad_to_xy_cm = [1,-1;-1,-1]*PULLEY_RADIUS/2;
+theta_rad_to_xy_cm = [1,-1;1,1]*PULLEY_RADIUS/2;
 
 load(filename, 'data');
 
@@ -59,8 +59,8 @@ out = sim(simIn);
 % out = sim(simIn,'SaveOutput','on','OutputSaveName','yout','SaveFormat','Dataset');
 
 resampledSim = resample(timeseries(out.simout), data.Time_ms_/1000);
-rms_error_x = rms(data.X_Velocity_cm_s_(2:end) - resampledSim.Data(2:end,1));
-rms_error_y = rms(data.Y_Velocity_cm_s_(2:end) - resampledSim.Data(2:end,2));
+rms_error_x = rms(data.x(2:end) - resampledSim.Data(2:end,1));
+rms_error_y = rms(data.y(2:end) - resampledSim.Data(2:end,2));
 
 error = norm([rms_error_x, rms_error_y]);
 % error = rms_error_x;

@@ -10,18 +10,18 @@ Km = 0.04025; % Nm / Amp
 R = 0.19; % 0.3; % Ohms
 L = 188e-6; % Henrys
 
-x0 = [868.5680e+000     2.1467e+003   316.3237e+000    17.0491e+000    18.9649e+000]; % 75pwm tuning apr9
+x0 = [2.1467e+003     868.5680e+000   316.3237e+000    17.0491e+000    18.9649e+000]; % 75pwm tuning apr9
 lower_bounds = [0.01, 0.01, 0.01, 0.01, 0.01];
 upper_bounds = [];
 options = optimset('PlotFcns',@optimplotfval);
 [x,fval,exitflag,output] = fminsearchbnd(fun,x0,lower_bounds,upper_bounds,options);
 
 %%
-n = 4;
+n = 1;
 for i = 1:n
     
-    file = strcat('fit_data', num2str(i), '.mat');
-    load(file);
+    file = strcat('feedforward_fit_data', num2str(i), '.mat');
+    load(fullfile("sys_id_data/", file));
     
     J_X = x(1)/ 1000 / 100^2;
     J_Y = x(2)/ 1000 / 100^2;
@@ -29,7 +29,7 @@ for i = 1:n
     B_X_coeff = x(4);
     B_Y_coeff = x(5);
     
-    Jm = 3.5^2/4.*[J_X+J_Y J_X-J_Y; J_X-J_Y J_X+J_Y] + J_theta*eye(2);
+    Jm = 3.5^2/4.*[J_X+J_Y J_Y-J_X; J_Y-J_X J_X+J_Y] + J_theta*eye(2);
     J_inv = inv(Jm);
     
     B_X = B_X_coeff *noLoadCurrent * Km / noLoadSpeed_rad; % Nms
@@ -56,7 +56,7 @@ for i = 1:n
     Kff{2,1} = Kff{2,1}
     Kff{2,2} = Kff{2,2}
     
-    theta_rad_to_xy_cm = [1,-1;-1,-1]*PULLEY_RADIUS/2;
+    theta_rad_to_xy_cm = [1,-1;1,1]*PULLEY_RADIUS/2;
 
     model = 'CoreXY_model_PWM';
     simIn = Simulink.SimulationInput(model);
@@ -74,21 +74,29 @@ for i = 1:n
     hold on
     
     plot(data.Time_ms_ / 1000, data.Left_PWM, '-k','LineWidth',2)
-    ylim([-110 110])
-    title('Input')
-    ylabel('PWM (-100 to 100)')
+    ylim([-1.1 1.1])
+    title('Left Motor Input')
+    ylabel('PWM (-1 to 1)')
+
+    plot(data.Time_ms_ / 1000, data.Left_PWM, '-k','LineWidth',2)
+    ylim([-1.1 1.1])
+    title('Right Motor Input')
+    ylabel('PWM (-1 to 1)')
     
     subplot(2,1,2);
     hold on
-    plot(data.Time_ms_ / 1000, data.X_Velocity_cm_s_, 'ro','linest','none');
-    plot(data.Time_ms_ / 1000, data.Y_Velocity_cm_s_, 'o','linest','none','color',[0 0.3 1]);
+    % plot(data.Time_ms_ / 1000, data.X_Velocity_cm_s_, 'ro','linest','none');
+    % plot(data.Time_ms_ / 1000, data.Y_Velocity_cm_s_, 'o','linest','none','color',[0 0.3 1]);
     
+    plot(data.Time_ms_ / 1000, data.x, 'ro','linest','none');
+    plot(data.Time_ms_ / 1000, data.y, 'o','linest','none','color',[0 0.3 1]);
+
     plot(out.simout.Time,out.simout.Data(:,1),'linewidth',2,'color',[0.6 0 0]);
     plot(out.simout.Time,out.simout.Data(:,2),'linewidth',2,'color',[0 0 0.6]);
     
     title('Output');
     legend({'X Measured', 'Y Measured', 'X Sim', 'Y Sim'});
     xlabel("Time (s)");
-    ylabel("Velocity (cm/s)");
+    ylabel("Position (cm)");
     grid on
 end
