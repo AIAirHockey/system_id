@@ -3,8 +3,8 @@ fun = @batch_analysis;
 num_files = 10; % CHANGE THIS FOR BATCH TUNING
 run_optimization = false; % false if you only want current parameters
 print_as_bs = false; % true to easily copy parameters
-print_cs_ds = false; % true to easily copy parameters
-generate_plots = true;
+print_cs_ds = true; % true to easily copy parameters
+generate_plots = false;
 
 PULLEY_RADIUS = 3.572890e-02; % Update each run from first line of raw csv
 
