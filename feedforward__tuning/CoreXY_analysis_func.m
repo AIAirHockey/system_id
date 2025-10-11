@@ -1,6 +1,6 @@
 function [error] = CoreXY_analysis_func(x, filename)
 
-PULLEY_RADIUS = 3.5686666463209935e-2;
+PULLEY_RADIUS = x(6);
 
 x1 = x(1);
 x2 = x(2);
