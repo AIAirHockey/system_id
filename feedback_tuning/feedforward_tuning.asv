@@ -19,10 +19,8 @@ PULLEY_RADIUS = 3.572890e-02; % Update each run from first line of raw csv
 % d0s = [1.15775e-05    4.26005e-03    8.18171e-02]; % error (x,y) = (0.0087,0.0083)
 % c0s = [9.08114e-06    9.45206e-03    6.29700e-02]; % 12V V2 oct 2
 % d0s = [5.86763e-06    3.99030e-03    7.01893e-02]; % error (x,y) = (0.013,0.014)
-% c0s = [1.50741e-05    9.27855e-03    6.47259e-02]; % 12V supercap oct 10
-% d0s = [1.84756e-07    3.95581e-03    7.52809e-02]; % error (x,y) = (0.013,0.016)
-c0s = [2.76926e-05    9.42916e-03    6.50252e-02]; % 12V supercap [91,35] window oct 12
-d0s = [2.12640e-07    3.98341e-03    7.56456e-02]; % error (x,y) = (0.012,0.017)
+c0s = [1.50741e-05    9.27855e-03    6.47259e-02]; % 12V supercap oct 10
+d0s = [1.84756e-07    3.95581e-03    7.52809e-02]; % error (x,y) = (0.013,0.016)
 
 %% No need to modify any code below 
 
@@ -93,46 +91,45 @@ if generate_plots
             out = sim(simIn);    
     
             resampledSim = resample(timeseries(out.simout), data.Time_ms_/1000);
-               
-            %
-            f = figure('pos',[0,0,650,700]);
-            subplot(2,1,1);
-            hold on
-
-            if j == 1
-                plot(data.Time_ms_ / 1000, data.X_PWM, '-k','LineWidth',2);
-                ylim([-1.1 1.1]);
-                title('X Motor Input');
-                ylabel('PWM (-1 to 1)');
-            else
-                f.Position = [650,0,650,700];
-                plot(data.Time_ms_ / 1000, data.Y_PWM, '-k','LineWidth',2);
-                ylim([-1.1 1.1]);
-                title('Y Motor Input');
-                ylabel('PWM (-1 to 1)');
-            end
-
-            subplot(2,1,2);
-            hold on
-
-            if j == 1
-                plot(data.Time_ms_ / 1000, data.x, 'ro','linest','none');
-                plot(out.simout.Time,out.simout.Data,'linewidth',2,'color',[0.6 0 0]);
-            else
-                plot(data.Time_ms_ / 1000, data.y, 'o','linest','none','color',[0 0.3 1]);
-                plot(out.simout.Time,out.simout.Data,'linewidth',2,'color',[0 0 0.6]);
-            end
-
-            title('Output');
-            if j == 1
-                legend({'X Measured', 'X Sim'});
-            else
-                legend({'Y Measured', 'Y Sim'});
-            end
-            xlabel("Time (s)");
-            ylabel("Position (m)");
-            grid on
-            %
+    
+            % f = figure('pos',[0,0,650,700]);
+            % subplot(2,1,1);
+            % hold on
+            % 
+            % if j == 1
+            %     plot(data.Time_ms_ / 1000, data.X_PWM, '-k','LineWidth',2);
+            %     ylim([-1.1 1.1]);
+            %     title('X Motor Input');
+            %     ylabel('PWM (-1 to 1)');
+            % else
+            %     f.Position = [650,0,650,700];
+            %     plot(data.Time_ms_ / 1000, data.Y_PWM, '-k','LineWidth',2);
+            %     ylim([-1.1 1.1]);
+            %     title('Y Motor Input');
+            %     ylabel('PWM (-1 to 1)');
+            % end
+            % 
+            % subplot(2,1,2);
+            % hold on
+            % 
+            % if j == 1
+            %     plot(data.Time_ms_ / 1000, data.x, 'ro','linest','none');
+            %     plot(out.simout.Time,out.simout.Data,'linewidth',2,'color',[0.6 0 0]);
+            % else
+            %     plot(data.Time_ms_ / 1000, data.y, 'o','linest','none','color',[0 0.3 1]);
+            %     plot(out.simout.Time,out.simout.Data,'linewidth',2,'color',[0 0 0.6]);
+            % end
+            % 
+            % title('Output');
+            % if j == 1
+            %     legend({'X Measured', 'X Sim'});
+            % else
+            %     legend({'Y Measured', 'Y Sim'});
+            % end
+            % xlabel("Time (s)");
+            % ylabel("Position (m)");
+            % grid on
+            
             
             if j == 1
                 xpos = resampledSim.Data;
