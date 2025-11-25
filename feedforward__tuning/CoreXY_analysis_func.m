@@ -15,7 +15,8 @@ denom = inv_Kff.denominator{1,1};
 
 [A,B,C,D] = tf2ss(numer,denom);
 
-% theta_rad_to_xy_cm = [1,-1;-1,-1]*PULLEY_RADIUS/2;
+% theta_rad_to_xy_m = [1,-1;-1,-1]*PULLEY_RADIUS/2;
+% xy_m_to_theta_rad = [1,-1;-1,-1]/PULLEY_RADIUS;
 
 load(filename, 'data');
 
