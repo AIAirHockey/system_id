@@ -1,6 +1,6 @@
 fun = @batch_analysis;
 
-num_files = 158; % CHANGE THIS FOR BATCH TUNING
+num_files = 95; % CHANGE THIS FOR BATCH TUNING
 run_optimization = false; % false if you only want current parameters
 print_as_bs = false; % true to easily copy parameters
 print_cs_ds = false; % true to easily copy parameters
@@ -31,8 +31,10 @@ PULLEY_RADIUS = readmatrix("../sys_id_data/pulley_radius.txt"); % Update each ru
 % d0s = [9.80875e-07    6.17135e-03    1.01995e-01]; % error (x,y) = (0.034,0.029)
 % c0s = [7.35474e-05    1.39117e-02    8.31498e-02]; % 158 files w/o low voltage nov 7
 % d0s = [1.03803e-08    5.95144e-03    9.21948e-02]; % error (x,y) = (0.035,0.023)
-c0s = [2.86918e-05    1.02735e-02    6.22858e-02]; % 158 files w/o low voltage nov 7
-d0s = [1.03175e-05    5.17814e-03    7.40327e-02]; % error (x,y) = (0.035,0.023)
+% c0s = [2.86918e-05    1.02735e-02    6.22858e-02]; % 24V supercap2 init guess
+% d0s = [1.03175e-05    5.17814e-03    7.40327e-02]; 
+c0s = [2.77705e-05    9.59766e-03    6.04937e-02]; % 24V supercap2 result
+d0s = [5.50208e-06    4.00572e-03    7.35631e-02]; % error (x,y) = (0.0079,0.0141)
 
 %% No need to modify any code below 
 
@@ -193,5 +195,5 @@ if generate_plots
         % waitfor(g);
     end
     T = table(index, xpos, ypos, 'VariableNames', {'index', 'x','y'});
-    writetable(T, '../sys_id_data/feedforward_sim_data_NN_NoLow.csv');
+    writetable(T, '../sys_id_data/feedforward_sim_oldp_supercap2.csv');
 end
