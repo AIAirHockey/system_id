@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 
 # === Load CSV ===
 df = pd.read_csv(
-    r"C:\Users\mauro\Documents\AirHockey2509\System ID\system_id\sys_id_data\mallet_data_newp_supercap.csv"
+    r"C:\Users\mauro\Documents\AirHockey2509\System ID\system_id\sys_id_data\mallet_data_overhead_supercap2.csv"
 )
 
 file_end = np.where((abs(df['x']) < 1e-16) & (abs(df['y']) < 1e-16))[0][0]
@@ -27,15 +27,15 @@ ax1.tick_params(axis="y", labelcolor="tab:blue")
 ax1.grid(True)
 
 # Secondary y-axis for PWM
-# ax2 = ax1.twinx()
-# ax2.plot(time, X_PWM, label="X_PWM", linestyle=":", color="tab:green")
-# ax2.set_ylabel("PWM (X)", color="tab:green")
-# ax2.tick_params(axis="y", labelcolor="tab:green")
+ax2 = ax1.twinx()
+ax2.plot(time, X_PWM, label="X_PWM", linestyle=":", color="tab:green")
+ax2.set_ylabel("PWM (X)", color="tab:green")
+ax2.tick_params(axis="y", labelcolor="tab:green")
 
 # Combine legends from both axes
 lines1, labels1 = ax1.get_legend_handles_labels()
-# lines2, labels2 = ax2.get_legend_handles_labels()
-# ax1.legend(lines1 + lines2, labels1 + labels2, loc="best")
+lines2, labels2 = ax2.get_legend_handles_labels()
+ax1.legend(lines1 + lines2, labels1 + labels2, loc="best")
 
 plt.title("X and PWM X vs Time")
 plt.tight_layout()
@@ -44,7 +44,7 @@ plt.tight_layout()
 fig, ay1 = plt.subplots(figsize=(10, 5))
 
 # Primary y-axis for position
-# ay1.plot(df['x'], df['y'], label="y", color="tab:blue", alpha=0.5)
+ay1.plot(df['x'], df['y'], label="y", color="tab:blue", alpha=0.5)
 ay1.plot(time, df["y"], label="y", color="tab:blue")
 ay1.plot(time, df["Expected_y"], label="Expected_y", linestyle="--", color="tab:orange")
 ay1.set_xlabel("Time (s)")
@@ -53,15 +53,15 @@ ay1.tick_params(axis="y", labelcolor="tab:blue")
 ay1.grid(True)
 
 # Secondary y-axis for PWM
-# ay2 = ay1.twinx()
-# ay2.plot(time, Y_PWM, label="Y_PWM", linestyle=":", color="tab:green")
-# ay2.set_ylabel("PWM (Y)", color="tab:green")
-# ay2.tick_params(axis="y", labelcolor="tab:green")
+ay2 = ay1.twinx()
+ay2.plot(time, Y_PWM, label="Y_PWM", linestyle=":", color="tab:green")
+ay2.set_ylabel("PWM (Y)", color="tab:green")
+ay2.tick_params(axis="y", labelcolor="tab:green")
 
 # Combine legends
 lines1, labels1 = ay1.get_legend_handles_labels()
-# lines2, labels2 = ay2.get_legend_handles_labels()
-# ay1.legend(lines1 + lines2, labels1 + labels2, loc="best")
+lines2, labels2 = ay2.get_legend_handles_labels()
+ay1.legend(lines1 + lines2, labels1 + labels2, loc="best")
 
 plt.title("Y and PWM Y vs Time")
 plt.tight_layout()

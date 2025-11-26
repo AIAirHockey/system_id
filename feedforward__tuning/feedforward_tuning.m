@@ -29,8 +29,10 @@ PULLEY_RADIUS = readmatrix("../sys_id_data/pulley_radius.txt"); % Update each ru
 % d0s = [7.28582e-06    4.73660e-03    7.33742e-02]; % error (x,y) = (0.012,0.024)
 % c0s = [6.14975e-05    1.37772e-02    8.14952e-02]; % 171 files 0.8VmaxFF Vtotal nov 6
 % d0s = [9.80875e-07    6.17135e-03    1.01995e-01]; % error (x,y) = (0.034,0.029)
-c0s = [7.35474e-05    1.39117e-02    8.31498e-02]; % 158 files w/o low voltage nov 7
-d0s = [1.03803e-08    5.95144e-03    9.21948e-02]; % error (x,y) = (0.035,0.023)
+% c0s = [7.35474e-05    1.39117e-02    8.31498e-02]; % 158 files w/o low voltage nov 7
+% d0s = [1.03803e-08    5.95144e-03    9.21948e-02]; % error (x,y) = (0.035,0.023)
+c0s = [2.86918e-05    1.02735e-02    6.22858e-02]; % 158 files w/o low voltage nov 7
+d0s = [1.03175e-05    5.17814e-03    7.40327e-02]; % error (x,y) = (0.035,0.023)
 
 %% No need to modify any code below 
 
